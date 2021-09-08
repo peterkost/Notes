@@ -12,6 +12,10 @@ struct NoteEditView: View {
     @ObservedObject var noteManager: NoteManager
     @State var note: Note
     
+    var newNote: Bool {
+        note._id == ""
+    }
+    
     var body: some View {
         Form {
             Section(header: Text("Title")) {
@@ -26,16 +30,16 @@ struct NoteEditView: View {
                 TextField("Date", text: $note.date)
             }
         }
-        .navigationBarTitle("Edit Note")
+        .navigationBarTitle(newNote ? "New Note" : "Edit Note")
         .navigationBarItems(
             trailing:
                 Button(action: {
-                    note._id == "" ? noteManager.addNote(note) : noteManager.updateNote(note)
+                    newNote ? noteManager.addNote(note) : noteManager.updateNote(note)
                     noteManager.fetchNotes()
                     presentation.wrappedValue.dismiss()
                     
                 }) {
-                    Text("Update")
+                    Text(newNote ? "Save" : "Update")
                 })
     }
 }

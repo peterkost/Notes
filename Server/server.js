@@ -1,3 +1,6 @@
+// Based on the tutorial by CodeWithChris
+// https://youtube.com/playlist?list=PLMRqhzcHGw1YSKIO61XncxTPoFu81K1Mx
+
 const express = require("express");
 const mongoose = require("mongoose");
 var app = express();
