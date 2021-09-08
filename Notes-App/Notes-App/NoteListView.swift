@@ -13,7 +13,7 @@ struct NoteListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(noteManager.noteList) { note in
+                ForEach(noteManager.noteList, id: \.self.title) { note in
                     NavigationLink(destination: NoteEditView(note: note)) {
                         VStack(alignment: .leading) {
                             HStack {

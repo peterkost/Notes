@@ -6,19 +6,28 @@
 //
 
 import Foundation
+import Alamofire
 
-struct Note: Codable, Identifiable {
+struct Note: Codable {
     var title: String
     var note: String
     var date: String
-    var id: String
+    var _id: String
+
 }
 
 class NoteManager: ObservableObject {
-    @Published private(set) var noteList: [Note]
+    @Published private(set) var noteList = [Note]()
     
     init() {
-        noteList = [Note(title: "SampleNote", note: "SampleText", date: "SampleDate", id: "abc"),
-                    Note(title: "SampleNote2", note: "SampleText2", date: "SampleDate2", id: "def")]
+        AF.request("http://192.168.1.223:8081/fetch").response { responce in
+            do {
+                let data = String(data: responce.data!, encoding: .utf8)!
+                self.noteList = try JSONDecoder().decode([Note].self, from: data.data(using: .utf8)!)
+            } catch {
+                print("Failed to decode notes.")
+            }
+        }
+
     }
 }

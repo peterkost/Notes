@@ -35,8 +35,8 @@ struct NoteEditView: View {
     }
 }
 
-struct NoteEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteEditView(note: Note(title: "SampleNote", note: "SampleText", date: "SampleDate", id: "abc"))
-    }
-}
+//struct NoteEditView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NoteEditView(note: Note(title: "SampleNote", note: "SampleText", date: "SampleDate", id: "abc"))
+//    }
+//}
