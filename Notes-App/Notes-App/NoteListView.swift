@@ -14,7 +14,7 @@ struct NoteListView: View {
         NavigationView {
             List {
                 ForEach(noteManager.noteList, id: \.self.title) { note in
-                    NavigationLink(destination: NoteEditView(note: note)) {
+                    NavigationLink(destination: NoteEditView(noteManager: noteManager, note: note)) {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text(note.title)
@@ -26,8 +26,14 @@ struct NoteListView: View {
                         }
                     }
                 }
+                .onDelete(perform: { indexSet in
+                    noteManager.deleteNotesAt(indexSet: indexSet)
+                })
             }
             .navigationBarTitle("Notes")
+            .navigationBarItems(trailing: NavigationLink(destination: NoteEditView(noteManager: noteManager, note: Note(title: "", note: "", date: "", _id: ""))) {
+                Text("New Note")
+            })
         }
     }
 }

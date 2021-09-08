@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct NoteEditView: View {
+    @Environment(\.presentationMode) var presentation
+    @ObservedObject var noteManager: NoteManager
     @State var note: Note
+    
     var body: some View {
         Form {
             Section(header: Text("Title")) {
@@ -29,7 +32,12 @@ struct NoteEditView: View {
         .navigationBarTitle("Edit Note")
         .navigationBarItems(
             trailing:
-                Button(action: {}) {
+                Button(action: {
+                    note._id == "" ? noteManager.addNote(note) : noteManager.updateNote(note)
+                    noteManager.fetchNotes()
+                    presentation.wrappedValue.dismiss()
+                    
+                }) {
                     Text("Update")
                 })
     }
