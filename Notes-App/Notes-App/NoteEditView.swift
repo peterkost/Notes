@@ -16,17 +16,14 @@ struct NoteEditView: View {
         Form {
             Section(header: Text("Title")) {
                 TextField("Title", text: $note.title)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
             
             Section(header: Text("Note")) {
                 TextField("Note", text: $note.note)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
             
             Section(header: Text("Date")) {
                 TextField("Date", text: $note.date)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
         }
         .navigationBarTitle("Edit Note")

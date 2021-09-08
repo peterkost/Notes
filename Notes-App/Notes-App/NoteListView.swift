@@ -13,28 +13,42 @@ struct NoteListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(noteManager.noteList, id: \.self.title) { note in
+                ForEach(noteManager.noteList, id: \.self._id) { note in
                     NavigationLink(destination: NoteEditView(noteManager: noteManager, note: note)) {
                         VStack(alignment: .leading) {
-                            HStack {
-                                Text(note.title)
-                                    .font(.title)
-                                Spacer()
-                                Text(note.date)
-                            }
+                            Text(note.title)
+                                .font(.title)
                             Text(note.note)
                         }
                     }
                 }
                 .onDelete(perform: { indexSet in
                     noteManager.deleteNotesAt(indexSet: indexSet)
+                    noteManager.fetchNotes()
                 })
             }
             .navigationBarTitle("Notes")
-            .navigationBarItems(trailing: NavigationLink(destination: NoteEditView(noteManager: noteManager, note: Note(title: "", note: "", date: "", _id: ""))) {
-                Text("New Note")
-            })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: NoteEditView(noteManager: noteManager, note: Note(title: "", note: "", date: currentDate(), _id: ""))) {
+                        Image(systemName: "square.and.pencil")
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+            }
+            
         }
+    }
+    
+    // fills new note date field
+    func currentDate() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        return formatter.string(from: date)
     }
 }
 
